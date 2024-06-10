@@ -93,5 +93,24 @@ export default function useTask() {
         }
     }
 
-    return { tasks, error, status, getAllTasks, createTask, getSingleTask, updateTask }
+    // Delete Task Data
+    const dalateTask = async (id) => {
+        tasks.value = []
+        error.value = null
+
+        try {
+            const token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            };
+            const response = await axios(baseUrl + 'delete/' + id, config)
+        } catch (e) {
+            error.value = e
+        }
+    }
+
+    return { tasks, error, status, getAllTasks, createTask, getSingleTask, updateTask, dalateTask }
 }

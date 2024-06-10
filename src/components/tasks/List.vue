@@ -3,12 +3,19 @@ import { RouterLink } from "vue-router";
 import useTask from "@/composable/taskApi.js"
 import { onMounted } from "vue";
 
-const { tasks, error, getAllTasks } = useTask();
+const { tasks, error, getAllTasks, dalateTask } = useTask();
 
 onMounted(() => {
     getAllTasks();
 });
 
+const deleteTaskData = async (id) => {
+    if (!window.confirm("Are you Sure ?")) {
+        return
+    }
+    await dalateTask(id);
+    await getAllTasks();
+}
 
 </script>
 
@@ -52,7 +59,8 @@ onMounted(() => {
                         <RouterLink :to="{ name: 'edit', params: { id: task.id } }">
                             <font-awesome-icon class="text-emerald-500 h-5 w-5 mx-5" :icon="['fas', 'pen-to-square']" />
                         </RouterLink>
-                        <font-awesome-icon class="text-red-500 h-5 w-5 cursor-pointer" :icon="['fas', 'trash']" />
+                        <font-awesome-icon class="text-red-500 h-5 w-5 cursor-pointer" :icon="['fas', 'trash']"
+                            @click="deleteTaskData(task.id)" />
                     </td>
                 </tr>
             </tbody>

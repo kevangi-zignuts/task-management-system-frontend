@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted } from "vue";
 import { useRoute } from 'vue-router';
-import useTask from "../../composable/taskApi.js";
+import useTask from "@/composable/taskApi.js";
 
 const { tasks, error, getSingleTask } = useTask();
 const route = useRoute();
