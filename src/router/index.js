@@ -36,6 +36,11 @@ const routes = [
         name: 'edit',
         component: () => import('@/components/tasks/Edit.vue'),
     },
+    {
+        path: '/reset-password/:token',
+        name: 'resetPassword',
+        component: () => import('@/components/auth/ResetPassword.vue'),
+    },
 ]
 
 const router = createRouter({

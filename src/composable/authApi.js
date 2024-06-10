@@ -77,6 +77,29 @@ export default function useAuthentication() {
         }
     }
 
+    // Reset Password 
+    const resetPassword = async (formData, token) => {
+        res.value = []
+        error.value = null
+        status.value = null
+
+        try {
+            const config = {
+                method: 'POST',
+                url: baseUrl.concat('reset-password/', token),
+                headers: {
+                    'Content-Type': 'Application/json'
+                },
+                data: JSON.stringify(formData)
+            }
+            const response = await axios(config)
+            console.log(response);
+            res.value = response.data
+            status.value = response.status
+        } catch (e) {
+            error.value = e
+        }
+    }
 
     // logout
     const logout = async () => {
@@ -101,5 +124,5 @@ export default function useAuthentication() {
         }
     }
 
-    return { res, error, status, login, logout, register, forgotPassword }
+    return { res, error, status, login, logout, register, forgotPassword, resetPassword }
 }
