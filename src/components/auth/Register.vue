@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, watch, ref } from 'vue';
 import router from '@/router';
-import useAuthentication from "@/composable/authApi";
+import useAuthentication from "../../composable/authApi";
 import { RouterLink } from 'vue-router';
 
 const { res, error, status, register } = useAuthentication();
@@ -10,6 +10,16 @@ const formData = reactive({
     email: "",
     password: "",
     password_confirmation: "",
+});
+
+const errors = ref({});
+
+watch(error, (newError) => {
+    if (newError) {
+        errors.value = newError;
+    } else {
+        errors.value = {};
+    }
 });
 
 const handleRegisterForm = async () => {
@@ -35,6 +45,7 @@ const handleRegisterForm = async () => {
                         <input v-model="formData.name" id="name" name="name" type="text" autocomplete="name" required
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
+                    <p v-for="(error, index) in errors.name" :key="index" class=" text-red-600 mt-2">{{ error }}</p>
                 </div>
                 <div>
                     <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
@@ -43,6 +54,7 @@ const handleRegisterForm = async () => {
                             required
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
+                    <p v-for="(error, index) in errors.email" :key="index" class=" text-red-600 mt-2">{{ error }}</p>
                 </div>
 
                 <div>
@@ -52,6 +64,7 @@ const handleRegisterForm = async () => {
                             autocomplete="current-password" required
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
+                    <p v-for="(error, index) in errors.password" :key="index" class=" text-red-600 mt-2">{{ error }}</p>
                 </div>
                 <div>
                     <label for="password_confirmation" class="block text-sm font-medium leading-6 text-gray-900">Confirm

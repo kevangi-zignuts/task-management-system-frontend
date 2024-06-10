@@ -26,7 +26,7 @@ export default function useAuthentication() {
             res.value = response.data
             status.value = response.status
         } catch (e) {
-            error.value = e
+            error.value = e.response.data.errors
         }
     }
 
@@ -50,7 +50,7 @@ export default function useAuthentication() {
             res.value = response.data
             status.value = response.status
         } catch (e) {
-            error.value = e
+            error.value = e.response.data.message
         }
     }
 
@@ -73,7 +73,7 @@ export default function useAuthentication() {
             res.value = response.data
             status.value = response.status
         } catch (e) {
-            error.value = e
+            error.value = e.response.data.errors
         }
     }
 
@@ -97,7 +97,7 @@ export default function useAuthentication() {
             res.value = response.data
             status.value = response.status
         } catch (e) {
-            error.value = e
+            error.value = e.response.data.errors
         }
     }
 
@@ -120,7 +120,7 @@ export default function useAuthentication() {
             status.value = response.status
             localStorage.removeItem('token');
         } catch (e) {
-            error.value = e
+            error.value = e.response.data.errors
         }
     }
 

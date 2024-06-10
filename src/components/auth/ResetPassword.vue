@@ -1,7 +1,7 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import router from '@/router';
-import useAuthentication from "@/composable/authApi";
+import useAuthentication from "../../composable/authApi";
 
 const { res, error, status, resetPassword } = useAuthentication();
 
@@ -13,6 +13,15 @@ const formData = reactive({
     password_confirmation: "",
 });
 
+const errors = ref({});
+
+watch(error, (newError) => {
+    if (newError) {
+        errors.value = newError;
+    } else {
+        errors.value = {};
+    }
+});
 
 const handleResetPasswordForm = async () => {
     await resetPassword(formData, token);
@@ -39,6 +48,7 @@ const handleResetPasswordForm = async () => {
                             autocomplete="password" required
                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
+                    <p v-for="(error, index) in errors.password" :key="index" class=" text-red-600 mt-2">{{ error }}</p>
                 </div>
                 <div>
                     <label for="password_confirmation" class="block text-sm font-medium leading-6 text-gray-900">Confirm
