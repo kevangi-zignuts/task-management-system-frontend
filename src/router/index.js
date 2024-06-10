@@ -12,6 +12,11 @@ const routes = [
         component: () => import('@/components/auth/Register.vue'),
     },
     {
+        path: '/forgot-password',
+        name: 'forgotPassword',
+        component: () => import('@/components/auth/ForgotPassword.vue'),
+    },
+    {
         path: '/task',
         name: 'list',
         component: () => import('@/components/tasks/List.vue'),

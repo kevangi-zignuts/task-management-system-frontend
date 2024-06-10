@@ -54,6 +54,29 @@ export default function useAuthentication() {
         }
     }
 
+    // Forgot Password
+    const forgotPassword = async (formData) => {
+        res.value = []
+        error.value = null
+        status.value = null
+
+        try {
+            const config = {
+                method: 'POST',
+                url: baseUrl.concat('forgot-password'),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(formData)
+            }
+            const response = await axios(config)
+            res.value = response.data
+            status.value = response.status
+        } catch (e) {
+            error.value = e
+        }
+    }
+
 
     // logout
     const logout = async () => {
@@ -78,5 +101,5 @@ export default function useAuthentication() {
         }
     }
 
-    return { res, error, status, login, logout, register }
+    return { res, error, status, login, logout, register, forgotPassword }
 }
