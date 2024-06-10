@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import useTask from "@/composable/taskApi";
 import router from '@/router';
@@ -11,6 +11,15 @@ const formData = reactive({
     description: "",
 });
 
+const errors = ref({});
+
+watch(error, (newError) => {
+    if (newError) {
+        errors.value = newError;
+    } else {
+        errors.value = {};
+    }
+});
 
 const handleAddTaskForm = async () => {
     await createTask(formData);
@@ -33,6 +42,7 @@ const handleAddTaskForm = async () => {
                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Task
                     Name</label>
             </div>
+            <p v-for="(error, index) in errors.name" :key="index" class=" text-red-600 mt-2">{{ error }}</p>
             <div class="relative z-0 w-full mb-8 group">
                 <input type="date" v-model="formData.due_date" name="due_date" required
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -41,12 +51,14 @@ const handleAddTaskForm = async () => {
                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Due
                     Date</label>
             </div>
+            <p v-for="(error, index) in errors.due_date" :key="index" class=" text-red-600 mB-1">{{ error }}</p>
             <div class="relative z-0 w-full mb-8 group">
                 <textarea v-model="formData.description" name="description"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"></textarea>
                 <label for="description"
                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Description</label>
             </div>
+            <p v-for="(error, index) in errors.description" :key="index" class=" text-red-600 mt-2">{{ error }}</p>
             <button type="submit"
                 class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Submit</button>
             <RouterLink :to="{ name: 'list' }">

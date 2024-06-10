@@ -42,7 +42,7 @@ export default function useTask() {
             const response = await axios(baseUrl + 'view/' + id, config)
             tasks.value = response.data
         } catch (e) {
-            error.value = e
+            error.value = e.response.data
         }
     }
 
@@ -66,7 +66,7 @@ export default function useTask() {
             tasks.value = response.data
             status.value = response.status
         } catch (e) {
-            error.value = e
+            error.value = e.response.data.errors
         }
     }
 
@@ -89,7 +89,7 @@ export default function useTask() {
             const response = await axios(config)
             status.value = response.status
         } catch (e) {
-            error.value = e
+            error.value = e.response.data.errors
         }
     }
 

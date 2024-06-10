@@ -2,7 +2,7 @@
 import { RouterLink } from 'vue-router';
 import { reactive, ref, watch } from 'vue';
 import router from '@/router';
-import useAuthentication from "../../composable/authApi";
+import useAuthentication from "@/composable/authApi";
 
 const { res, error, status, login } = useAuthentication();
 
