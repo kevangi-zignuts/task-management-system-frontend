@@ -41,6 +41,12 @@ const routes = [
         name: 'resetPassword',
         component: () => import('@/components/auth/ResetPassword.vue'),
     },
+    // 404 Page not found
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'notfound',
+        component: () => import('@/views/PageNotFound.vue'),
+    },
 ]
 
 const router = createRouter({
