@@ -12,7 +12,14 @@ export default function useTask() {
         tasks.value = []
         error.value = null
         try {
-            const response = await axios.get(baseUrl)
+            const token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            };
+            const response = await axios.get(baseUrl, config)
             tasks.value = response.data
         } catch (e) {
             error.value = e
