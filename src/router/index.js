@@ -26,6 +26,11 @@ const routes = [
         name: 'view',
         component: () => import('@/components/tasks/View.vue'),
     },
+    {
+        path: '/task/edit/:id(\\d+)',
+        name: 'edit',
+        component: () => import('@/components/tasks/Edit.vue'),
+    },
 ]
 
 const router = createRouter({

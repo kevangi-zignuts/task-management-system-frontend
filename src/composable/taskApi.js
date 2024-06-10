@@ -42,7 +42,7 @@ export default function useTask() {
             const response = await axios(baseUrl + 'view/' + id, config)
             tasks.value = response.data
         } catch (e) {
-            error.value = e.response.data
+            error.value = e
         }
     }
 
@@ -66,11 +66,32 @@ export default function useTask() {
             tasks.value = response.data
             status.value = response.status
         } catch (e) {
-            error.value = e.response.data.errors
-            console.log(e.response);
+            error.value = e
         }
     }
 
+    // update Task Data
+    const updateTask = async (id, data) => {
+        tasks.value = []
+        error.value = null
 
-    return { tasks, error, status, getAllTasks, createTask, getSingleTask }
+        try {
+            const token = localStorage.getItem('token');
+            const config = {
+                method: 'POST',
+                url: baseUrl + 'update/' + id,
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(data)
+            }
+            const response = await axios(config)
+            status.value = response.status
+        } catch (e) {
+            error.value = e
+        }
+    }
+
+    return { tasks, error, status, getAllTasks, createTask, getSingleTask, updateTask }
 }
