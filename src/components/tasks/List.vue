@@ -46,7 +46,9 @@ onMounted(() => {
                     <td class="px-6 py-4">{{ task.due_date }}</td>
                     <td class="px-6 py-4">{{ task.description }}</td>
                     <td class="px-6 py-4">
-                        <font-awesome-icon class="text-blue-500 h-5 w-5" :icon="['fas', 'eye']" />
+                        <RouterLink :to="{ name: 'view', params: { id: task.id } }">
+                            <font-awesome-icon class="text-blue-500 h-5 w-5" :icon="['fas', 'eye']" />
+                        </RouterLink>
                         <font-awesome-icon class="text-emerald-500 h-5 w-5 mx-5" :icon="['fas', 'pen-to-square']" />
                         <font-awesome-icon class="text-red-500 h-5 w-5 cursor-pointer" :icon="['fas', 'trash']" />
                     </td>

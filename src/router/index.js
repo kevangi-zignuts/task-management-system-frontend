@@ -21,6 +21,11 @@ const routes = [
         name: 'create',
         component: () => import('@/components/tasks/Create.vue'),
     },
+    {
+        path: '/task/view/:id(\\d+)',
+        name: 'view',
+        component: () => import('@/components/tasks/View.vue'),
+    },
 ]
 
 const router = createRouter({
