@@ -16,6 +16,11 @@ const routes = [
         name: 'list',
         component: () => import('@/components/tasks/List.vue'),
     },
+    {
+        path: '/task/create',
+        name: 'create',
+        component: () => import('@/components/tasks/Create.vue'),
+    },
 ]
 
 const router = createRouter({

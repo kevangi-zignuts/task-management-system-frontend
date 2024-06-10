@@ -26,6 +26,31 @@ export default function useTask() {
         }
     }
 
+    // Add Task Data
+    const createTask = async (formData) => {
+        tasks.value = []
+        error.value = null
 
-    return { tasks, error, status, getAllTasks }
+        try {
+            const token = localStorage.getItem('token');
+            const config = {
+                method: 'POST',
+                url: baseUrl + 'store',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(formData)
+            }
+            const response = await axios(config)
+            tasks.value = response.data
+            status.value = response.status
+        } catch (e) {
+            error.value = e.response.data.errors
+            console.log(e.response);
+        }
+    }
+
+
+    return { tasks, error, status, getAllTasks, createTask }
 }
